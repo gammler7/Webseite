@@ -62,8 +62,18 @@
     setTimeout(spawn, spawnInterval);
   }
 
+  function updateLastModified() {
+    var el = document.getElementById('last-updated');
+    if (!el || !document.lastModified) return;
+    var d = new Date(document.lastModified);
+    if (isNaN(d.getTime())) return;
+    var options = { day: 'numeric', month: 'long', year: 'numeric' };
+    el.textContent = 'Zuletzt geändert: ' + d.toLocaleDateString('de-DE', options);
+  }
+
   window.addEventListener('resize', resize);
   resize();
   spawn();
   draw();
+  updateLastModified();
 })();
