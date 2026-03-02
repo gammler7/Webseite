@@ -75,10 +75,26 @@
 
   // Vogelgezwitscher möglichst sofort starten (Autoplay kann vom Browser blockiert werden)
   if (birdAudio) {
+    function tryPlay() {
+      birdAudio.play().catch(function () {
+        // Ignorieren, wenn der Browser es (noch) blockiert
+      });
+    }
+
+    // Versuch beim Laden
     birdAudio.autoplay = true;
-    birdAudio.play().catch(function () {
-      // Falls der Browser Autoplay verbietet, kann der Nutzer über die Controls starten.
-    });
+    tryPlay();
+
+    // Fallback: beim ersten Tippen/Klicken auf die Seite starten
+    function startOnInteraction() {
+      tryPlay();
+      window.removeEventListener('pointerdown', startOnInteraction);
+      window.removeEventListener('touchstart', startOnInteraction);
+      window.removeEventListener('click', startOnInteraction);
+    }
+    window.addEventListener('pointerdown', startOnInteraction, { once: true });
+    window.addEventListener('touchstart', startOnInteraction, { once: true });
+    window.addEventListener('click', startOnInteraction, { once: true });
   }
 
   window.addEventListener('resize', resize);
