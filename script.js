@@ -73,20 +73,31 @@
     setTimeout(spawn, spawnInterval);
   }
 
-  // Vogelgezwitscher: Start beim ersten Tipp/Klick des Nutzers (notwendig für viele Handy-Browser)
+  // Vogelgezwitscher: Start per Knopf (zuverlässig auf Handy-Browsern)
   if (birdAudio) {
+    var started = false;
     function startBirds() {
+      if (started) return;
+      started = true;
       birdAudio.play().catch(function () {
-        // Wenn der Browser es blockiert, passiert einfach nichts
+        // Wenn der Browser es blockiert, erlauben wir einen weiteren Versuch
+        started = false;
       });
-      document.removeEventListener('pointerdown', startBirds);
-      document.removeEventListener('touchstart', startBirds);
-      document.removeEventListener('click', startBirds);
     }
 
-    document.addEventListener('pointerdown', startBirds);
-    document.addEventListener('touchstart', startBirds);
-    document.addEventListener('click', startBirds);
+    var birdToggle = document.getElementById('bird-toggle');
+    if (birdToggle) {
+      birdToggle.addEventListener('click', startBirds);
+      birdToggle.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+        startBirds();
+      }, { passive: false });
+    } else {
+      // Fallback: beim ersten Tipp irgendwo starten
+      document.addEventListener('pointerdown', startBirds, { once: true });
+      document.addEventListener('touchstart', startBirds, { once: true });
+      document.addEventListener('click', startBirds, { once: true });
+    }
   }
 
   window.addEventListener('resize', resize);

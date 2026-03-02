@@ -91,3 +91,21 @@ figcaption{
   pointer-events: none;
   z-index: 9999;
 }
+
+#bird-toggle {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+#bird-toggle:active {
+  transform: scale(0.96);
+}
