@@ -64,11 +64,17 @@
 
   function updateLastModified() {
     var el = document.getElementById('last-updated');
-    if (!el || !document.lastModified) return;
-    var d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return;
-    var options = { day: 'numeric', month: 'long', year: 'numeric' };
-    el.textContent = 'Zuletzt geändert: ' + d.toLocaleDateString('de-DE', options);
+    if (!el) return;
+    var raw = document.lastModified;
+    if (!raw) return;
+    var d = new Date(raw);
+    if (!isNaN(d.getTime())) {
+      var options = { day: 'numeric', month: 'long', year: 'numeric' };
+      el.textContent = 'Zuletzt geändert: ' + d.toLocaleDateString('de-DE', options);
+    } else {
+      // Fallback: Rohwert anzeigen, falls das Datum nicht geparst werden kann
+      el.textContent = 'Zuletzt geändert: ' + raw;
+    }
   }
 
   window.addEventListener('resize', resize);
