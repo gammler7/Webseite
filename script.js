@@ -5,13 +5,12 @@
   var colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ee5a24', '#c8d6af'];
   var maxParticles = 60;      // Standard: Desktop
   var spawnInterval = 130;
-  var birdAudio = document.getElementById('bird-sounds');
 
   function updateDensity() {
     var isSmall = window.innerWidth <= 640;
     if (isSmall) {
-      maxParticles = 30;      // deutlich weniger Eier auf dem Handy
-      spawnInterval = 220;    // langsamere Spawn-Rate
+      maxParticles = 30;      // weniger Konfetti auf dem Handy
+      spawnInterval = 220;
     } else {
       maxParticles = 60;
       spawnInterval = 130;
@@ -25,39 +24,29 @@
   }
 
   function createParticle() {
-    var base = 14 + Math.random() * 12;
     return {
       x: Math.random() * canvas.width,
       y: -10,
-      w: base,
-      h: base * 1.35, // etwas länglicher für Ei-Form
+      w: 6 + Math.random() * 8,
+      h: 4 + Math.random() * 6,
       color: colors[Math.floor(Math.random() * colors.length)],
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: 1.1 + Math.random() * 1.4,
+      vx: (Math.random() - 0.5) * 0.8,
+      vy: 1.2 + Math.random() * 1.5,
       rot: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 3
+      rotSpeed: (Math.random() - 0.5) * 8
     };
-  }
-
-  function drawEgg(p) {
-    ctx.save();
-    // In die Mitte des Eis verschieben
-    ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
-    ctx.rotate((p.rot * Math.PI) / 180);
-    // Ei-Form: unten etwas breiter als oben
-    ctx.scale(1, 1.15);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, p.w / 2, p.h / 2, 0, 0, Math.PI * 2);
-    ctx.fillStyle = p.color;
-    ctx.fill();
-    ctx.restore();
   }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (var i = particles.length - 1; i >= 0; i--) {
       var p = particles[i];
-      drawEgg(p);
+      ctx.save();
+      ctx.translate(p.x + p.w / 2, p.y + p.h / 2);
+      ctx.rotate((p.rot * Math.PI) / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
       p.x += p.vx;
       p.y += p.vy;
       p.rot += p.rotSpeed;
@@ -71,33 +60,6 @@
       particles.push(createParticle());
     }
     setTimeout(spawn, spawnInterval);
-  }
-
-  // Vogelgezwitscher: Start per Knopf (zuverlässig auf Handy-Browsern)
-  if (birdAudio) {
-    var started = false;
-    function startBirds() {
-      if (started) return;
-      started = true;
-      birdAudio.play().catch(function () {
-        // Wenn der Browser es blockiert, erlauben wir einen weiteren Versuch
-        started = false;
-      });
-    }
-
-    var birdToggle = document.getElementById('bird-toggle');
-    if (birdToggle) {
-      birdToggle.addEventListener('click', startBirds);
-      birdToggle.addEventListener('touchstart', function (e) {
-        e.preventDefault();
-        startBirds();
-      }, { passive: false });
-    } else {
-      // Fallback: beim ersten Tipp irgendwo starten
-      document.addEventListener('pointerdown', startBirds, { once: true });
-      document.addEventListener('touchstart', startBirds, { once: true });
-      document.addEventListener('click', startBirds, { once: true });
-    }
   }
 
   window.addEventListener('resize', resize);
