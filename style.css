@@ -69,10 +69,12 @@ figcaption{
 @media (max-width: 640px) {
   body {
     padding: 12px;
+    min-height: auto;
+    display: block;
   }
 
   img {
-    max-height: 52vh;
+    max-height: 48vh;
   }
 
   .content h1 {
