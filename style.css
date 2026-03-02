@@ -37,6 +37,25 @@ figcaption{
   opacity:.75;
   text-align:center;
 }
+.marquee-wrap {
+  width: min(820px, 92vw);
+  margin-top: 1rem;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.marquee {
+  display: inline-flex;
+  animation: marquee 20s linear infinite;
+}
+.marquee-text {
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 #confetti-canvas {
   position: fixed;
   top: 0;
