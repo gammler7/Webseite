@@ -11,7 +11,7 @@ body{
 }
 figure{
   margin:0;
-  width: min(820px, 92vw); /* begrenzt die Breite */
+  width: 100%;
 }
 img{
   width:100%;
@@ -23,7 +23,14 @@ img{
   box-shadow: 0 14px 40px rgba(0,0,0,.45);
   background: rgba(255,255,255,0.03); /* dezenter Rahmen-Hintergrund bei contain */
 }
-.content { display: flex; flex-direction: column; align-items: center; }
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(820px, calc(100vw - 48px));
+  width: 100%;
+  box-sizing: border-box;
+}
 .content h1 {
   color: #fff;
   font-size: clamp(1.5rem, 4vw, 2rem);
@@ -38,10 +45,11 @@ figcaption{
   text-align:center;
 }
 .marquee-wrap {
-  width: min(820px, 92vw);
+  width: 100%;
   margin-top: 1rem;
   overflow: hidden;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 .marquee {
   display: inline-flex;
@@ -55,6 +63,25 @@ figcaption{
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+/* Auf kleinen Screens: Text vollständig sichtbar, keine Laufschrift */
+@media (max-width: 640px) {
+  .marquee-wrap {
+    white-space: normal;
+    overflow: visible;
+    text-align: center;
+  }
+  .marquee {
+    display: block;
+    animation: none;
+  }
+  .marquee .marquee-text:last-child {
+    display: none;
+  }
+  .marquee .marquee-text {
+    padding: 0 0.5rem;
+  }
 }
 #confetti-canvas {
   position: fixed;
