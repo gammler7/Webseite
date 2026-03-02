@@ -65,7 +65,7 @@ figcaption{
   100% { transform: translateX(-50%); }
 }
 
-/* Auf kleinen Screens: Text vollständig sichtbar, möglichst ohne Scrollen */
+/* Auf kleinen Screens: kompakter, aber Laufschrift bleibt aktiv */
 @media (max-width: 640px) {
   body {
     padding: 12px;
@@ -80,25 +80,6 @@ figcaption{
   .content h1 {
     font-size: clamp(1.3rem, 3.5vw, 1.6rem);
     margin: 0 0 0.5rem 0;
-  }
-
-  .marquee-wrap {
-    white-space: normal;
-    overflow: visible;
-    text-align: center;
-  }
-
-  .marquee {
-    display: block;
-    animation: none;
-  }
-
-  .marquee .marquee-text:last-child {
-    display: none;
-  }
-
-  .marquee .marquee-text {
-    padding: 0 0.5rem;
   }
 }
 #confetti-canvas {
