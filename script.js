@@ -3,8 +3,9 @@
   var ctx = canvas.getContext('2d');
   var particles = [];
   var colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ee5a24', '#c8d6af'];
-  var maxParticles = 120;
-  var spawnInterval = 80;
+  var maxParticles = 60;      // weniger Eier gleichzeitig
+  var spawnInterval = 130;    // etwas längere Pause zwischen neuen Eiern
+  var birdAudio = document.getElementById('bird-sounds');
 
   function resize() {
     canvas.width = window.innerWidth;
@@ -58,6 +59,20 @@
       particles.push(createParticle());
     }
     setTimeout(spawn, spawnInterval);
+  }
+
+  // Vogelgezwitscher nach der ersten Berührung starten (Autoplay-Schutz umgehen)
+  if (birdAudio) {
+    var audioStarted = false;
+    function startBirds() {
+      if (audioStarted) return;
+      audioStarted = true;
+      birdAudio.play().catch(function () {
+        // Ignorieren, falls Browser es doch blockiert
+      });
+      window.removeEventListener('pointerdown', startBirds);
+    }
+    window.addEventListener('pointerdown', startBirds);
   }
 
   window.addEventListener('resize', resize);
