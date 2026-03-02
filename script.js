@@ -3,13 +3,25 @@
   var ctx = canvas.getContext('2d');
   var particles = [];
   var colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ee5a24', '#c8d6af'];
-  var maxParticles = 60;      // weniger Eier gleichzeitig
-  var spawnInterval = 130;    // etwas längere Pause zwischen neuen Eiern
+  var maxParticles = 60;      // Standard: Desktop
+  var spawnInterval = 130;
   var birdAudio = document.getElementById('bird-sounds');
+
+  function updateDensity() {
+    var isSmall = window.innerWidth <= 640;
+    if (isSmall) {
+      maxParticles = 30;      // deutlich weniger Eier auf dem Handy
+      spawnInterval = 220;    // langsamere Spawn-Rate
+    } else {
+      maxParticles = 60;
+      spawnInterval = 130;
+    }
+  }
 
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    updateDensity();
   }
 
   function createParticle() {
@@ -61,18 +73,12 @@
     setTimeout(spawn, spawnInterval);
   }
 
-  // Vogelgezwitscher nach der ersten Berührung starten (Autoplay-Schutz umgehen)
+  // Vogelgezwitscher möglichst sofort starten (Autoplay kann vom Browser blockiert werden)
   if (birdAudio) {
-    var audioStarted = false;
-    function startBirds() {
-      if (audioStarted) return;
-      audioStarted = true;
-      birdAudio.play().catch(function () {
-        // Ignorieren, falls Browser es doch blockiert
-      });
-      window.removeEventListener('pointerdown', startBirds);
-    }
-    window.addEventListener('pointerdown', startBirds);
+    birdAudio.autoplay = true;
+    birdAudio.play().catch(function () {
+      // Falls der Browser Autoplay verbietet, kann der Nutzer über die Controls starten.
+    });
   }
 
   window.addEventListener('resize', resize);
