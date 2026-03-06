@@ -1,7 +1,7 @@
-# Neuigkeiten
-
-Willkommen auf der Neuigkeiten-Seite. Hier kannst du deine Einträge in **Markdown** schreiben.
-
+<!-- # Neuigkeiten
+ -->
+Willkommen auf der Neuigkeiten-Seite.
+<!-- 
 ## Beispiel-Formatierung
 
 - Aufzählungen
@@ -10,4 +10,4 @@ Willkommen auf der Neuigkeiten-Seite. Hier kannst du deine Einträge in **Markdo
 
 [Links](index.html) werden zu klickbaren Links.
 
-Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite.
+Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite. -->

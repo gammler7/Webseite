@@ -74,6 +74,16 @@ img{
   box-sizing: border-box;
   padding-top: 3.5rem; /* Platz unter dem fixen Menü */
 }
+.content-neuigkeiten {
+  padding-top: 2rem;
+  align-items: flex-start;
+}
+.content-neuigkeiten h1 {
+  margin-bottom: 0.5rem;
+}
+.content-neuigkeiten .markdown-content {
+  margin-top: 0;
+}
 .content h1 {
   color: #fff;
   font-size: clamp(1.5rem, 4vw, 2rem);
@@ -115,7 +125,7 @@ figcaption{
   width: 100%;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
-  text-align: left;
+  text-align:left;
 }
 .markdown-content h1 { font-size: 1.5rem; margin: 1.25rem 0 0.75rem; color: #fff; }
 .markdown-content h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: #fff; }
