@@ -9,6 +9,48 @@ body{
   padding: 24px; /* etwas Luft am Rand */
   box-sizing: border-box;
 }
+
+/* Hauptmenü */
+.main-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(11, 11, 15, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 24px;
+  box-sizing: border-box;
+}
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: min(820px, calc(100vw - 48px));
+  margin: 0 auto;
+}
+.main-nav a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: background 0.2s, color 0.2s;
+}
+.main-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.main-nav a.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 500;
+}
 figure{
   margin:0;
   width: 100%;
@@ -30,6 +72,7 @@ img{
   max-width: min(820px, calc(100vw - 48px));
   width: 100%;
   box-sizing: border-box;
+  padding-top: 3.5rem; /* Platz unter dem fixen Menü */
 }
 .content h1 {
   color: #fff;
