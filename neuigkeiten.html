@@ -21,6 +21,25 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     (function() {
+      function setzeArbeitslosDauer() {
+        var span = document.getElementById('arbeitslos-dauer');
+        if (!span) return;
+        var start = new Date(2025, 6, 2);  // 2. Juli 2025
+        var heute = new Date();
+        start.setHours(0, 0, 0, 0);
+        heute.setHours(0, 0, 0, 0);
+        var monate = 0;
+        var d = new Date(start.getTime());
+        while (true) {
+          var naechster = new Date(d.getFullYear(), d.getMonth() + 1, d.getDate());
+          if (naechster > heute) break;
+          d = naechster;
+          monate++;
+        }
+        var tage = Math.floor((heute - d) / (1000 * 60 * 60 * 24));
+        span.textContent = monate + ' Monate und ' + tage + ' Tage';
+      }
+
       var el = document.getElementById('neuigkeiten-markdown');
       fetch('neuigkeiten.md')
         .then(function(r) { return r.text(); })
@@ -30,6 +49,7 @@
           } else {
             el.innerHTML = '<pre>' + md.replace(/</g, '&lt;') + '</pre>';
           }
+          setzeArbeitslosDauer();
         })
         .catch(function() {
           el.innerHTML = '<p>Die Datei <code>neuigkeiten.md</code> konnte nicht geladen werden.</p>';
