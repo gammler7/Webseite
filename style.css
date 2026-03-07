@@ -1,7 +1,7 @@
 :root { color-scheme: light dark; }
 body{
   margin:0;
-  min-height:100vh;
+  /* min-height:100vh; */
   display:grid;
   place-items:center;
   background:#0b0b0f;
@@ -123,9 +123,11 @@ figcaption{
 /* Gerenderter Markdown-Inhalt (Neuigkeiten) */
 .markdown-content {
   width: 100%;
-  color: rgba(255, 255, 255, 0.9);
+  color: #fff;
   line-height: 1.6;
   text-align:left;
+  margin: 0;
+  padding: 0; 
 }
 .markdown-content h1 { font-size: 1.5rem; margin: 1.25rem 0 0.75rem; color: #fff; }
 .markdown-content h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: #fff; }
