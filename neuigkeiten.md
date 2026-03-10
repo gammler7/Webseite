@@ -1,7 +1,5 @@
 <!-- # Neuigkeiten
  -->
-- Willkommen auf der Neuigkeiten-Seite.
-
 - Ich bin seit dem 2.7.2025 arbeitslos (<span id="arbeitslos-dauer"></span>).
 
 <!-- 
