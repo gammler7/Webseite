@@ -1,6 +1,7 @@
 <!-- # Neuigkeiten
  -->
 - Ich bin seit dem 2.7.2025 arbeitslos (<span id="arbeitslos-dauer"></span>).
+- Ich habe mir für den Sommer eine neue Klimaanlage gekauft.
 
 <!-- 
 ## Beispiel-Formatierung
