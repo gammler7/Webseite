@@ -1,7 +1,9 @@
 <!-- # Neuigkeiten
  -->
 - Ich bin seit dem 2.7.2025 arbeitslos (<span id="arbeitslos-dauer"></span>).
-- Ich habe mir für den Sommer eine neue Klimaanlage gekauft.
+- Ich habe mir für den Sommer eine neue Klimaanlage gekauft. Ich benutze sie nur wenn es sehr heiß ist.
+
+<img src="klimaanlage.jpg" alt="Meine neue Klimaanlage" style="max-width: 200px; height: auto;">
 
 <!-- 
 ## Beispiel-Formatierung
