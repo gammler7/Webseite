@@ -132,7 +132,7 @@ figcaption{
 .markdown-content h1 { font-size: 1.5rem; margin: 1.25rem 0 0.75rem; color: #fff; }
 .markdown-content h2 { font-size: 1.25rem; margin: 1.25rem 0 0.5rem; color: #fff; }
 .markdown-content h3 { font-size: 1.1rem; margin: 1rem 0 0.5rem; }
-.markdown-content p { margin: 0.75rem 0; }
+.markdown-content p { margin: 0.75rem 0; font-size: 19px;}
 .markdown-content ul, .markdown-content ol { margin: 0.75rem 0; padding-left: 1.5rem; }
 .markdown-content li { margin: 0.25rem 0; }
 .markdown-content a { color: #7eb8ff; text-decoration: none; }

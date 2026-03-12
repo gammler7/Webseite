@@ -1,9 +1,9 @@
 <!-- # Neuigkeiten
  -->
-- Ich bin seit dem 2.7.2025 arbeitslos (<span id="arbeitslos-dauer"></span>).
-- Ich habe mir für den Sommer eine neue Klimaanlage gekauft. Ich benutze sie nur wenn es sehr heiß ist.
+- <p> Im ca. September 2020(Pandemie 20.3.2020) </p>
 
-<img src="klimaanlage.jpg" alt="Meine neue Klimaanlage" style="max-width: 200px; height: auto;">
+
+<!-- <img src="klimaanlage.jpg" alt="Meine neue Klimaanlage" style="max-width: 200px; height: auto;"> -->
 
 <!-- 
 ## Beispiel-Formatierung
