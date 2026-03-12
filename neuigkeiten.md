@@ -2,7 +2,7 @@
  -->
 - <p> Im September 2020 (ca.) (Pandemie 20.3.2020) habe ich angefangen zu programmieren.<br>
 Da gab es noch nicht ChatGpt.
-- Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
+- <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
 Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben.
  </p>
 
