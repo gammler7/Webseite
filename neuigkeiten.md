@@ -3,7 +3,7 @@
 - <p> Im September 2020 (ca.) (Pandemie 20.3.2020) habe ich angefangen zu programmieren.<br>
 Da gab es noch nicht ChatGpt.
 - <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
-Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben.
+Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben das sogar prämiert wurde.
  </p>
 
 
@@ -14,8 +14,8 @@ Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatt
 
 - Aufzählungen
 - funktionieren so
-- **Fett** und *kursiv* ebenfalls
+- **Fett** und *kursiv* ebenfalls -->
 
-[Links](index.html) werden zu klickbaren Links.
+[app](index.html) werden zu klickbaren Links.
 
 Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite. -->
