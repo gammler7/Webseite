@@ -18,4 +18,4 @@ Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatt
 
 <!-- [app](index.html) werden zu klickbaren Links.
 
-Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite. --> -->
+Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite. -->
