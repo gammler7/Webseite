@@ -4,7 +4,10 @@
 Da gab es noch nicht ChatGpt.
 - <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
 Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben das sogar prämiert wurde.
- <div style="border: 1px solid white; padding: 10px; margin-top: 10px;">
+
+---
+
+
 <p style="margin: 0;">Nur kurz als Info: Ich habe mir für den kommenden Sommer eine Klimaanlage zugelegt.</p>
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; margin-top: 10px;">
 <div style="flex: 0 0 auto; max-width: 200px; width: 100%;">
@@ -13,7 +16,14 @@ Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatt
 <p style="margin: 0; flex: 1; min-width: 160px;">Sie verbraucht 1 kW pro Std. Ich benutze sie daher sehr selten.</p>
 </div>
 </div>
+
 </p>
+
+---
+
+
+
+
 
 <!-- 
 ## Beispiel-Formatierung
