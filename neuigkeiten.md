@@ -4,8 +4,10 @@
 Da gab es noch nicht ChatGpt.
 - <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
 Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben das sogar prämiert wurde.
- </p>
-
+ <div style="border: 1px solid white; padding: 10px;">
+nur kurz als Info: Ich habe mir für den kommenden Sommer eine Klimaanlage zugelegt.
+</div>
+</p>
 
 <!-- <img src="klimaanlage.jpg" alt="Meine neue Klimaanlage" style="max-width: 200px; height: auto;"> -->
 
