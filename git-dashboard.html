@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Git-Übersicht</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body.git-dash-body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      display: block;
+      padding-top: 3.5rem;
+    }
+    .git-dash-wrap {
+      max-width: min(960px, calc(100vw - 48px));
+      margin: 0 auto;
+      width: 100%;
+    }
+    .git-dash-wrap h1 {
+      font-family: Syne, system-ui, sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      margin: 0 0 0.25rem;
+      letter-spacing: -0.02em;
+    }
+    .git-dash-meta {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 1.5rem;
+    }
+    .git-dash-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    .git-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.35);
+    }
+    .git-card h2 {
+      font-family: Syne, sans-serif;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.5);
+      margin: 0 0 0.85rem;
+      font-weight: 600;
+    }
+    .git-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      margin-top: 0.35rem;
+    }
+    .git-badge--clean {
+      background: rgba(46, 213, 115, 0.15);
+      color: #2ed573;
+      border: 1px solid rgba(46, 213, 115, 0.35);
+    }
+    .git-badge--dirty {
+      background: rgba(255, 171, 0, 0.12);
+      color: #ffb347;
+      border: 1px solid rgba(255, 171, 0, 0.35);
+    }
+    .git-mono {
+      font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", monospace;
+      font-size: 0.88rem;
+      word-break: break-all;
+      color: rgba(255,255,255,0.92);
+    }
+    .git-sync {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.35rem;
+    }
+    .git-sync span {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+    }
+    .git-sync strong { color: #7eb8ff; }
+    .git-table-wrap {
+      overflow-x: auto;
+      margin: 0 -0.25rem;
+    }
+    table.git-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    table.git-table th {
+      text-align: left;
+      padding: 0.45rem 0.5rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    table.git-table td {
+      padding: 0.5rem 0.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      vertical-align: top;
+    }
+    table.git-table tr:last-child td { border-bottom: none; }
+    table.git-table code {
+      color: #9ae6b4;
+      font-size: 0.82rem;
+    }
+    .git-empty {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+    .git-error {
+      background: rgba(255, 71, 87, 0.1);
+      border: 1px solid rgba(255, 71, 87, 0.35);
+      color: #ffaaa5;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    .git-error code {
+      display: block;
+      margin-top: 0.6rem;
+      color: #fff;
+      font-size: 0.85rem;
+      word-break: break-all;
+    }
+    .git-remotes-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.88rem;
+    }
+    .git-remotes-list li { margin-bottom: 0.65rem; }
+    .git-remotes-list .name { color: #7eb8ff; font-weight: 600; }
+    .git-remotes-list .url { color: rgba(255,255,255,0.55); word-break: break-all; }
+  </style>
+</head>
+<body class="git-dash-body">
+  <nav class="main-nav" aria-label="Hauptnavigation">
+    <ul>
+      <li><a href="index.html">Startseite</a></li>
+      <li><a href="skills.html">Skills</a></li>
+      <li><a href="git-dashboard.html" class="active">Git</a></li>
+    </ul>
+  </nav>
+  <div class="git-dash-wrap">
+    <h1>Git-Übersicht</h1>
+    <p class="git-dash-meta" id="dash-sub">Lade Daten …</p>
+    <div id="dash-error" class="git-error" hidden></div>
+    <div id="dash-content" hidden>
+      <div class="git-dash-grid">
+        <div class="git-card">
+          <h2>Branch &amp; HEAD</h2>
+          <div class="git-mono" id="f-branch"></div>
+          <div class="git-mono" id="f-head" style="margin-top:0.5rem;opacity:0.85;font-size:0.82rem;"></div>
+          <div id="f-badge"></div>
+        </div>
+        <div class="git-card">
+          <h2>Tracking</h2>
+          <div class="git-mono" id="f-upstream"></div>
+          <div class="git-sync" id="f-sync"></div>
+        </div>
+        <div class="git-card">
+          <h2>Stashes</h2>
+          <p class="git-mono" id="f-stash"></p>
+          <ul class="git-remotes-list" id="f-stash-list" style="margin-top:0.75rem;"></ul>
+        </div>
+      </div>
+      <div class="git-card" style="margin-top:1rem;">
+        <h2>Working Tree</h2>
+        <div class="git-table-wrap" id="f-tree"></div>
+      </div>
+      <div class="git-card" style="margin-top:1rem;">
+        <h2>Letzte Commits</h2>
+        <div class="git-table-wrap" id="f-log"></div>
+      </div>
+      <div class="git-card" style="margin-top:1rem;">
+        <h2>Remotes</h2>
+        <ul class="git-remotes-list" id="f-remotes"></ul>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var sub = document.getElementById('dash-sub');
+      var errEl = document.getElementById('dash-error');
+      var content = document.getElementById('dash-content');
+
+      function showError(msg, cmd) {
+        sub.textContent = 'Keine aktuellen Daten';
+        errEl.hidden = false;
+        errEl.innerHTML = msg + (cmd ? '<code>' + cmd + '</code>' : '');
+        content.hidden = true;
+      }
+
+      function esc(s) {
+        if (s == null) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      fetch('git-overview.json', { cache: 'no-store' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (d) {
+          sub.textContent = 'Stand: ' + (d.generatedAt ? new Date(d.generatedAt).toLocaleString('de-DE') : '—') +
+            (d.repository ? ' · ' + d.repository : '');
+          content.hidden = false;
+
+          document.getElementById('f-branch').textContent = d.branch || '—';
+          var headEl = document.getElementById('f-head');
+          headEl.textContent = d.headShort || '—';
+          if (d.head) headEl.title = d.head;
+
+          var badge = document.getElementById('f-badge');
+          badge.innerHTML = d.isClean
+            ? '<span class="git-badge git-badge--clean">Working tree clean</span>'
+            : '<span class="git-badge git-badge--dirty">Änderungen vorhanden</span>';
+
+          document.getElementById('f-upstream').textContent = d.upstream || '(kein Upstream gesetzt)';
+
+          var sync = document.getElementById('f-sync');
+          if (d.upstream) {
+            sync.innerHTML =
+              '<span>ahead: <strong>' + esc(d.ahead) + '</strong></span>' +
+              '<span>behind: <strong>' + esc(d.behind) + '</strong></span>';
+          } else {
+            sync.innerHTML = '';
+          }
+
+          var st = document.getElementById('f-stash');
+          st.textContent = (d.stashCount || 0) + ' Einträge';
+          var sl = document.getElementById('f-stash-list');
+          sl.innerHTML = '';
+          (d.stashes || []).slice(0, 8).forEach(function (line) {
+            var li = document.createElement('li');
+            li.className = 'git-mono';
+            li.style.fontSize = '0.8rem';
+            li.style.color = 'rgba(255,255,255,0.65)';
+            li.textContent = line;
+            sl.appendChild(li);
+          });
+
+          var tree = document.getElementById('f-tree');
+          var entries = d.statusEntries || [];
+          if (entries.length === 0) {
+            tree.innerHTML = '<p class="git-empty">Keine lokalen Änderungen (untracked/modified) laut letztem Lauf.</p>';
+          } else {
+            var tb = '<table class="git-table"><thead><tr><th>Status</th><th>Datei</th></tr></thead><tbody>';
+            entries.forEach(function (e) {
+              tb += '<tr><td><code>' + esc(e.code) + '</code></td><td>' + esc(e.path) + '</td></tr>';
+            });
+            tb += '</tbody></table>';
+            tree.innerHTML = tb;
+          }
+
+          var logEl = document.getElementById('f-log');
+          var commits = d.recentCommits || [];
+          if (commits.length === 0) {
+            logEl.innerHTML = '<p class="git-empty">Keine Commits gefunden.</p>';
+          } else {
+            var lg = '<table class="git-table"><thead><tr><th></th><th>Datum</th><th>Autor</th><th>Nachricht</th></tr></thead><tbody>';
+            commits.forEach(function (c) {
+              lg += '<tr><td><code>' + esc(c.shortHash) + '</code></td><td>' + esc(c.date && c.date.slice(0, 10)) + '</td><td>' + esc(c.author) + '</td><td>' + esc(c.subject) + '</td></tr>';
+            });
+            lg += '</tbody></table>';
+            logEl.innerHTML = lg;
+          }
+
+          var rm = document.getElementById('f-remotes');
+          rm.innerHTML = '';
+          var remotes = d.remotes || {};
+          var names = Object.keys(remotes);
+          if (names.length === 0) {
+            rm.innerHTML = '<li class="git-empty">Keine Remotes konfiguriert.</li>';
+          } else {
+            names.forEach(function (n) {
+              var li = document.createElement('li');
+              var r = remotes[n];
+              li.innerHTML =
+                '<span class="name">' + esc(n) + '</span><br />' +
+                '<span class="url">fetch: ' + esc(r.fetch || '—') + '</span><br />' +
+                '<span class="url">push: ' + esc(r.push || '—') + '</span>';
+              rm.appendChild(li);
+            });
+          }
+        })
+        .catch(function () {
+          showError(
+            'Es wurde keine <strong>git-overview.json</strong> gefunden oder sie ist ungültig. ' +
+            'Im Projektordner PowerShell öffnen und ausführen:',
+            '.\x5cupdate-git-overview.ps1'
+          );
+        });
+    })();
+  </script>
+</body>
+</html>

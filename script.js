@@ -1,5 +1,23 @@
 (function () {
+  function updateLastModified() {
+    var el = document.getElementById('last-updated');
+    if (!el) return;
+    var raw = document.lastModified;
+    if (!raw) return;
+    var d = new Date(raw);
+    if (!isNaN(d.getTime())) {
+      var options = { day: 'numeric', month: 'long', year: 'numeric' };
+      el.textContent = 'Zuletzt geändert: ' + d.toLocaleDateString('de-DE', options);
+    } else {
+      el.textContent = 'Zuletzt geändert: ' + raw;
+    }
+  }
+
   var canvas = document.getElementById('confetti-canvas');
+  if (!canvas) {
+    updateLastModified();
+    return;
+  }
   var ctx = canvas.getContext('2d');
   var particles = [];
   var colors = ['#ff6b6b', '#feca57', '#48dbfb', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43', '#ee5a24', '#c8d6af'];
@@ -60,21 +78,6 @@
       particles.push(createParticle());
     }
     setTimeout(spawn, spawnInterval);
-  }
-
-  function updateLastModified() {
-    var el = document.getElementById('last-updated');
-    if (!el) return;
-    var raw = document.lastModified;
-    if (!raw) return;
-    var d = new Date(raw);
-    if (!isNaN(d.getTime())) {
-      var options = { day: 'numeric', month: 'long', year: 'numeric' };
-      el.textContent = 'Zuletzt geändert: ' + d.toLocaleDateString('de-DE', options);
-    } else {
-      // Fallback: Rohwert anzeigen, falls das Datum nicht geparst werden kann
-      el.textContent = 'Zuletzt geändert: ' + raw;
-    }
   }
 
   window.addEventListener('resize', resize);
