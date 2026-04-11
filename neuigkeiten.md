@@ -4,7 +4,7 @@
 Da gab es noch nicht ChatGpt.
 - <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
 Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben das sogar prämiert wurde.
-- <div class="neuigkeiten-arek-block"><p>Durch Arek habe ich viel gelernt. Z.B. wie man Apps erstellt.</p><p>Javascript und Python <img class="md-inline-icon" src="javascript.png" alt=""><img class="md-inline-icon2" src="python.jpeg" alt="">  programmiert.</p></div>
+- <div class="neuigkeiten-arek-block"><p>Durch Arek habe ich viel gelernt. Z.B. wie man Apps erstellt.</p><p>Javascript und Python <img class="md-inline-icon" src="javascript.png" alt=""><img class="md-inline-icon2" src="python.jpeg" alt="">  programmiert.<br> Durch Videokurse von YouTube <img class="md-inline-icon2" src="youtube.png">habe ich die Datenbankanbindung an verschiedenste Datenbanktypen gelernt.</p></div>
 
 ---
 
