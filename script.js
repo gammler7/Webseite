@@ -57,6 +57,59 @@
 
   setBesucherCookie();
 
+  var COOKIE_HINWEIS_LS = 'webseite_cookie_hinweis_ok';
+
+  function initCookieBanner() {
+    if (!document.body) return;
+    var dismissed = false;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        dismissed = localStorage.getItem(COOKIE_HINWEIS_LS) === '1';
+      }
+    } catch (e) {
+      dismissed = false;
+    }
+    if (dismissed) return;
+
+    var banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'region');
+    banner.setAttribute('aria-label', 'Hinweis zu Cookies');
+
+    var inner = document.createElement('div');
+    inner.className = 'cookie-banner__inner';
+
+    var p = document.createElement('p');
+    p.className = 'cookie-banner__text';
+    p.textContent =
+      'Diese Website verwendet ein Cookie, um den Zeitpunkt Ihres Besuchs zu speichern. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'cookie-banner__btn';
+    btn.textContent = 'Verstanden';
+
+    inner.appendChild(p);
+    inner.appendChild(btn);
+    banner.appendChild(inner);
+    document.body.appendChild(banner);
+    document.body.classList.add('cookie-banner-visible');
+
+    btn.addEventListener('click', function () {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem(COOKIE_HINWEIS_LS, '1');
+        }
+      } catch (e2) {
+        /* ignorieren */
+      }
+      banner.remove();
+      document.body.classList.remove('cookie-banner-visible');
+    });
+  }
+
+  initCookieBanner();
+
   function updateLastModified() {
     var el = document.getElementById('last-updated');
     if (!el) return;
