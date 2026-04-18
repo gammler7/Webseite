@@ -1,4 +1,27 @@
 (function () {
+  function setCookie(name, value, maxAgeSeconds) {
+    var segments = [
+      encodeURIComponent(name) + '=' + encodeURIComponent(value),
+      'path=/',
+      'max-age=' + String(maxAgeSeconds),
+      'SameSite=Lax'
+    ];
+    if (typeof location !== 'undefined' && location.protocol === 'https:') {
+      segments.push('Secure');
+    }
+    document.cookie = segments.join('; ');
+  }
+
+  function setBesucherCookie() {
+    try {
+      setCookie('webseite_besuch', new Date().toISOString(), 60 * 60 * 24 * 365);
+    } catch (e) {
+      /* z. B. document.cookie nicht verfügbar */
+    }
+  }
+
+  setBesucherCookie();
+
   function updateLastModified() {
     var el = document.getElementById('last-updated');
     if (!el) return;
