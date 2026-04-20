@@ -1,38 +1,36 @@
-<!-- # Neuigkeiten
- -->
-- <p> Im September 2020 (ca.) (Pandemie 20.3.2020) habe ich angefangen zu programmieren.<br>
-Da gab es noch nicht ChatGpt.
-- <p>Meine ersten kleinen Projekte baute ich von YouTube nach.<br>
-Dann fand ich schnell einen Kurs im Internet von Arkadius Roczniewski. Arek hatte in jungen Jahren schon ein gutes Programm geschrieben das sogar prämiert wurde.
-- <div class="neuigkeiten-arek-block"><p>Durch Arek habe ich viel gelernt. Z.B. wie man Apps erstellt.</p><p>Javascript und Python <img class="md-inline-icon" src="javascript.png" alt=""><img class="md-inline-icon2" src="python.jpeg" alt="">  programmiert.<br> Durch Videokurse von YouTube <img class="md-inline-icon2" src="youtube.png">habe ich die Datenbankanbindung an verschiedenste Datenbanktypen gelernt (MongoDB)<img class="md-inline-icon2" src="mongo.jpeg">, MariaDB<img class="md-inline-icon2" src="maria.png"> . </p></div>
+# Skills und Profil
 
----
+Ich entwickle praxisnahe Webprojekte mit Fokus auf klare Struktur, solide Technik und gute Wartbarkeit.
 
+## Mein Weg in die Entwicklung
 
-<p style="margin: 0;">Nur kurz als Info: Ich habe mir für den kommenden Sommer eine Klimaanlage zugelegt.</p>
-<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; margin-top: 10px;">
-<div style="flex: 0 0 auto; max-width: 200px; width: 100%;">
-<img src="klimaanlage.jpg" alt="Meine neue Klimaanlage" style="width: 100%; height: auto; display: block; margin: 0;">
-</div>
-<p style="margin: 0; flex: 1; min-width: 160px;">Sie verbraucht 1 kW pro Std. Ich benutze sie daher sehr selten.</p>
-</div>
-</div>
+- Seit 2020 baue ich kontinuierlich eigene Projekte auf.
+- Begonnen habe ich mit kleinen Lernprojekten und Schritt fuer Schritt komplexere Anwendungen umgesetzt.
+- Besonders wichtig war fuer mich, Konzepte nicht nur zu kopieren, sondern wirklich zu verstehen und selbst anzupassen.
 
-</p>
+## Technische Schwerpunkte
 
----
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend-Grundlagen:** Node.js und PHP
+- **Datenbanken:** MongoDB und MariaDB (Anbindung, Abfragen, einfache Datenmodelle)
+- **Praxis:** Formularverarbeitung, Validierung, kleine APIs, Dateistrukturen und Deployment
 
+## Was ich in Projekten beachte
 
+- **Verstaendlicher Code:** klare Benennung und nachvollziehbarer Aufbau
+- **Zuverlaessigkeit:** robuste Basisfunktionen statt instabiler Schnellloesungen
+- **Datenschutz-Bewusstsein:** sparsame Datennutzung und transparente Hinweise
+- **Weiterentwicklung:** regelmaessige Verbesserungen statt einmaliger Endversion
 
+## Aktueller Fokus
 
+Zurzeit erweitere ich meine Seite in Richtung:
 
-<!-- 
-## Beispiel-Formatierung
+- bessere Struktur von Inhalten
+- stabilere Server- und Logik-Funktionen
+- rechtlich sauberere Darstellung (z. B. Cookie-Hinweise und reduzierte externe Abhaengigkeiten)
 
-- Aufzählungen
-- funktionieren so
-- **Fett** und *kursiv* ebenfalls -->
+## Kurzprofil
 
-<!-- [app](index.html) werden zu klickbaren Links.
-
-Du kannst diese Datei `neuigkeiten.md` jederzeit bearbeiten – der Inhalt erscheint automatisch auf der Seite. -->
+Ich arbeite gerne an Projekten, die fuer Besucher klar, schnell und nuetzlich sind.
+Mein Ziel ist es, Technik und Inhalt so zu verbinden, dass die Seite professionell wirkt und trotzdem persoenlich bleibt.

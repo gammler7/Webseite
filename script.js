@@ -37,17 +37,57 @@
     document.cookie = segments.join('; ');
   }
 
+  var BESUCHER_ID_KEY = 'webseite_besuch_id';
+  var LETZTER_BESUCH_KEY = 'webseite_besuch';
+
+  function neueBesucherId() {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    return 'v' + String(Date.now()) + '-' + Math.random().toString(36).slice(2, 12);
+  }
+
+  function besucherIdHolenOderAnlegen() {
+    var id = getCookie(BESUCHER_ID_KEY);
+    if (!id) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          id = localStorage.getItem(BESUCHER_ID_KEY) || '';
+        }
+      } catch (e) {
+        id = '';
+      }
+    }
+    if (!id) {
+      id = neueBesucherId();
+    }
+    try {
+      setCookie(BESUCHER_ID_KEY, id, 60 * 60 * 24 * 400);
+    } catch (e) {
+      /* ignorieren */
+    }
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(BESUCHER_ID_KEY, id);
+      }
+    } catch (e2) {
+      /* ignorieren */
+    }
+    return id;
+  }
+
   function setBesucherCookie() {
+    besucherIdHolenOderAnlegen();
     var value = new Date().toISOString();
     try {
-      setCookie('webseite_besuch', value, 60 * 60 * 24 * 365);
+      setCookie(LETZTER_BESUCH_KEY, value, 60 * 60 * 24 * 365);
     } catch (e) {
       /* document.cookie nicht verfügbar */
     }
-    if (getCookie('webseite_besuch') === null) {
+    if (getCookie(LETZTER_BESUCH_KEY) === null) {
       try {
         if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('webseite_besuch', value);
+          localStorage.setItem(LETZTER_BESUCH_KEY, value);
         }
       } catch (e2) {
         /* z. B. privates Fenster, Speicher voll */
@@ -82,7 +122,7 @@
     var p = document.createElement('p');
     p.className = 'cookie-banner__text';
     p.textContent =
-      'Diese Website verwendet ein Cookie, um den Zeitpunkt Ihres Besuchs zu speichern. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
+      'Diese Website verwendet Cookies, um Ihren Besuch zu speichern und anonym eine Besucherkennung für interne Statistik zu setzen. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -109,6 +149,40 @@
   }
 
   initCookieBanner();
+
+  function sendVisitLog() {
+    if (typeof location === 'undefined' || location.protocol === 'file:') return;
+    var path = location.pathname || '';
+    if (/logs\.php$/i.test(path) || /log_visit\.php$/i.test(path)) return;
+
+    var visitorId = getCookie(BESUCHER_ID_KEY);
+    if (!visitorId) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          visitorId = localStorage.getItem(BESUCHER_ID_KEY) || '';
+        }
+      } catch (e) {
+        visitorId = '';
+      }
+    }
+    var payload = JSON.stringify({
+      page: path + (location.search || ''),
+      visitorId: visitorId || ''
+    });
+    try {
+      fetch('log_visit.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        credentials: 'same-origin',
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {
+      /* offline oder kein PHP */
+    }
+  }
+
+  sendVisitLog();
 
   function updateLastModified() {
     var el = document.getElementById('last-updated');
