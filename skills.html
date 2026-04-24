@@ -15,6 +15,31 @@
   </nav>
   <div class="content content-neuigkeiten">
     <p class="announce-back-on" role="status">Seit dem 4.4.26 arbeite ich wieder.</p>
+    <section class="skills-animate-demo" aria-label="Animation Testbereich">
+      <h2 class="skills-animate-demo__title">Animationen (Testbereich)</h2>
+      <p class="skills-animate-demo__subtitle">Unter 45 %: <strong><span id="unter45-stunden-wert">72</span> Stunden</strong></p>
+      <div class="skills-progress">
+        <div class="skills-progress__label">
+          <span>Auslastung</span>
+          <span id="skills-progress-percent">45%</span>
+        </div>
+        <div class="skills-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" aria-label="Auslastung in Prozent">
+          <div id="skills-progress-fill" class="skills-progress__fill"></div>
+        </div>
+      </div>
+      <div class="skills-tabs" role="tablist" aria-label="Arbeitsbereiche">
+        <button class="skills-tab active" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" type="button">Ueberblick</button>
+        <button class="skills-tab" id="tab-unbar" role="tab" aria-selected="false" aria-controls="panel-unbar" type="button">Unbar</button>
+      </div>
+      <section class="skills-tab-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+        <p>Hier ist der allgemeine Bereich. Wechsle zum Reiter "Unbar", um die Stunden zu aendern.</p>
+      </section>
+      <section class="skills-tab-panel" id="panel-unbar" role="tabpanel" aria-labelledby="tab-unbar" hidden>
+        <label for="unbar-stunden-input">Stunden (bearbeitbar):</label>
+        <input id="unbar-stunden-input" type="number" min="0" step="1" value="72" />
+        <p>Die Eingabe wirkt direkt auf das Feld "Unter 45 %".</p>
+      </section>
+    </section>
     <div id="neuigkeiten-markdown" class="markdown-content" aria-live="polite">
       <p>Lade Neuigkeiten …</p>
     </div>
@@ -41,6 +66,93 @@
         span.textContent = monate + ' Monate und ' + tage + ' Tage';
       }
 
+      function initScrollReveal(root) {
+        if (!root || typeof IntersectionObserver === 'undefined') return;
+        var targets = root.querySelectorAll('h1, h2, h3, p, ul, ol, li, blockquote');
+        for (var i = 0; i < targets.length; i++) {
+          targets[i].classList.add('reveal-item');
+        }
+        var observer = new IntersectionObserver(function(entries, obs) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.18 });
+        for (var j = 0; j < targets.length; j++) {
+          observer.observe(targets[j]);
+        }
+      }
+
+      function initParallax() {
+        var ticking = false;
+        function updateParallax() {
+          var y = (window.scrollY || 0) * 0.08;
+          document.documentElement.style.setProperty('--skills-parallax-y', y.toFixed(2) + 'px');
+          ticking = false;
+        }
+        window.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        }, { passive: true });
+        updateParallax();
+      }
+
+      function initTabsAndProgress() {
+        var tabs = document.querySelectorAll('.skills-tab');
+        var panels = document.querySelectorAll('.skills-tab-panel');
+        var input = document.getElementById('unbar-stunden-input');
+        var stundenWert = document.getElementById('unter45-stunden-wert');
+        var percentLabel = document.getElementById('skills-progress-percent');
+        var fill = document.getElementById('skills-progress-fill');
+        var track = document.querySelector('.skills-progress__track');
+        var basisStunden = 160;
+
+        function setActiveTab(targetId) {
+          tabs.forEach(function(tab) {
+            var isActive = tab.getAttribute('aria-controls') === targetId;
+            tab.classList.toggle('active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          panels.forEach(function(panel) {
+            var isActive = panel.id === targetId;
+            panel.classList.toggle('active', isActive);
+            panel.hidden = !isActive;
+          });
+        }
+
+        function updateFromHours(value, animatePulse) {
+          var stunden = Number(value);
+          if (!isFinite(stunden) || stunden < 0) stunden = 0;
+          var percent = Math.max(0, Math.min(100, (stunden / basisStunden) * 100));
+          stundenWert.textContent = String(Math.round(stunden));
+          percentLabel.textContent = percent.toFixed(1).replace('.', ',') + '%';
+          fill.style.width = percent + '%';
+          track.setAttribute('aria-valuenow', String(Math.round(percent)));
+          if (animatePulse) {
+            stundenWert.classList.remove('value-pulse');
+            void stundenWert.offsetWidth;
+            stundenWert.classList.add('value-pulse');
+          }
+        }
+
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            setActiveTab(tab.getAttribute('aria-controls'));
+          });
+        });
+
+        if (input) {
+          input.addEventListener('input', function() {
+            updateFromHours(input.value, true);
+          });
+          updateFromHours(input.value, false);
+        }
+      }
+
       var el = document.getElementById('neuigkeiten-markdown');
       fetch('neuigkeiten.md')
         .then(function(r) { return r.text(); })
@@ -51,9 +163,14 @@
             el.innerHTML = '<pre>' + md.replace(/</g, '&lt;') + '</pre>';
           }
           setzeArbeitslosDauer();
+          initScrollReveal(el);
+          initTabsAndProgress();
+          initParallax();
         })
         .catch(function() {
           el.innerHTML = '<p>Die Datei <code>neuigkeiten.md</code> konnte nicht geladen werden.</p>';
+          initTabsAndProgress();
+          initParallax();
         });
     })();
   </script>
