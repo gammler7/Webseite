@@ -162,6 +162,9 @@ img{
 .skills-progress {
   margin-bottom: 1rem;
 }
+.skills-current-work-text {
+  color: #fff;
+}
 .skills-progress__label {
   display: flex;
   justify-content: space-between;
