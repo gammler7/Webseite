@@ -17,28 +17,17 @@
     <p class="announce-back-on" role="status">Seit dem 4.4.26 arbeite ich wieder.</p>
     <section class="skills-animate-demo" aria-label="Animation Testbereich">
       <h2 class="skills-animate-demo__title">Animationen (Testbereich)</h2>
-      <p class="skills-animate-demo__subtitle">Unter 45 %: <strong><span id="unter45-stunden-wert">72</span> Stunden</strong></p>
+      <p class="skills-animate-demo__subtitle">Aktuell: <strong><span id="skills-days-value">8</span> von 30 Tagen</strong></p>
       <div class="skills-progress">
         <div class="skills-progress__label">
-          <span>Auslastung</span>
-          <span id="skills-progress-percent">45%</span>
+          <span>Monatliche Arbeitstage</span>
+          <span id="skills-progress-percent">8/30 Tage</span>
         </div>
-        <div class="skills-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" aria-label="Auslastung in Prozent">
+        <div class="skills-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="8" aria-label="Arbeitstage im Monat">
           <div id="skills-progress-fill" class="skills-progress__fill"></div>
         </div>
       </div>
-      <div class="skills-tabs" role="tablist" aria-label="Arbeitsbereiche">
-        <button class="skills-tab active" id="tab-overview" role="tab" aria-selected="true" aria-controls="panel-overview" type="button">Ueberblick</button>
-        <button class="skills-tab" id="tab-unbar" role="tab" aria-selected="false" aria-controls="panel-unbar" type="button">Stunden</button>
-      </div>
-      <section class="skills-tab-panel active" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
-        <p>Hier ist der allgemeine Bereich. Wechsle zum Reiter "Stunden", um die Stunden zu aendern.</p>
-      </section>
-      <section class="skills-tab-panel" id="panel-unbar" role="tabpanel" aria-labelledby="tab-unbar" hidden>
-        <label for="unbar-stunden-input">Stunden (bearbeitbar):</label>
-        <input id="unbar-stunden-input" type="number" min="0" step="1" value="72" />
-        <p>Die Eingabe wirkt direkt auf das Feld "Unter 45 %".</p>
-      </section>
+      <p>So viel arbeite ich momentan/ Monat</p>
     </section>
     <div id="neuigkeiten-markdown" class="markdown-content" aria-live="polite">
       <p>Lade Neuigkeiten …</p>
@@ -102,55 +91,25 @@
       }
 
       function initTabsAndProgress() {
-        var tabs = document.querySelectorAll('.skills-tab');
-        var panels = document.querySelectorAll('.skills-tab-panel');
-        var input = document.getElementById('unbar-stunden-input');
-        var stundenWert = document.getElementById('unter45-stunden-wert');
+        var tageWert = document.getElementById('skills-days-value');
         var percentLabel = document.getElementById('skills-progress-percent');
         var fill = document.getElementById('skills-progress-fill');
         var track = document.querySelector('.skills-progress__track');
-        var basisStunden = 160;
+        var arbeitstageImMonat = 30;
+        var aktuelleArbeitstage = 8;
 
-        function setActiveTab(targetId) {
-          tabs.forEach(function(tab) {
-            var isActive = tab.getAttribute('aria-controls') === targetId;
-            tab.classList.toggle('active', isActive);
-            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-          });
-          panels.forEach(function(panel) {
-            var isActive = panel.id === targetId;
-            panel.classList.toggle('active', isActive);
-            panel.hidden = !isActive;
-          });
+        function updateFromDays(tage) {
+          var sichereTage = Number(tage);
+          if (!isFinite(sichereTage) || sichereTage < 0) sichereTage = 0;
+          if (sichereTage > arbeitstageImMonat) sichereTage = arbeitstageImMonat;
+          var percent = (sichereTage / arbeitstageImMonat) * 100;
+          if (tageWert) tageWert.textContent = String(sichereTage);
+          if (percentLabel) percentLabel.textContent = sichereTage + '/' + arbeitstageImMonat + ' Tage';
+          if (fill) fill.style.width = percent + '%';
+          if (track) track.setAttribute('aria-valuenow', String(sichereTage));
         }
 
-        function updateFromHours(value, animatePulse) {
-          var stunden = Number(value);
-          if (!isFinite(stunden) || stunden < 0) stunden = 0;
-          var percent = Math.max(0, Math.min(100, (stunden / basisStunden) * 100));
-          stundenWert.textContent = String(Math.round(stunden));
-          percentLabel.textContent = percent.toFixed(1).replace('.', ',') + '%';
-          fill.style.width = percent + '%';
-          track.setAttribute('aria-valuenow', String(Math.round(percent)));
-          if (animatePulse) {
-            stundenWert.classList.remove('value-pulse');
-            void stundenWert.offsetWidth;
-            stundenWert.classList.add('value-pulse');
-          }
-        }
-
-        tabs.forEach(function(tab) {
-          tab.addEventListener('click', function() {
-            setActiveTab(tab.getAttribute('aria-controls'));
-          });
-        });
-
-        if (input) {
-          input.addEventListener('input', function() {
-            updateFromHours(input.value, true);
-          });
-          updateFromHours(input.value, false);
-        }
+        updateFromDays(aktuelleArbeitstage);
       }
 
       var el = document.getElementById('neuigkeiten-markdown');
