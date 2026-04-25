@@ -1,4 +1,4 @@
-# Skills und Profil
+# Über mich und Profil
 
 Ich entwickle praxisnahe Webprojekte mit Fokus auf klare Struktur, solide Technik und gute Wartbarkeit.
 
