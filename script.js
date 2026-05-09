@@ -98,40 +98,78 @@
   setBesucherCookie();
 
   var COOKIE_HINWEIS_LS = 'webseite_cookie_hinweis_ok';
-  var STARTSEITE_WIEDERKEHR_KEY = 'webseite_startseite_wiederkehr';
+  var STARTSEITE_LETZTER_TAG_KEY = 'webseite_startseite_letzter_tag';
+  /** @deprecated nur Migration von älterer Version */
+  var STARTSEITE_WIEDERKEHR_LEGACY = 'webseite_startseite_wiederkehr';
 
-  /** Startseite: „Willkommen zurück“, wenn der Besucher schon einmal da war (Cookie + localStorage). */
-  function initStartseiteBegruessung() {
-    var h1 = document.getElementById('startseite-begruessung');
-    if (!h1) return;
+  function startseiteKalendertagLocal(d) {
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1);
+    if (m.length === 1) m = '0' + m;
+    var tag = String(d.getDate());
+    if (tag.length === 1) tag = '0' + tag;
+    return y + '-' + m + '-' + tag;
+  }
 
-    var warSchonDa = getCookie(STARTSEITE_WIEDERKEHR_KEY) === '1';
-    if (!warSchonDa) {
+  function startseiteLetztenTagLesen() {
+    var roh = getCookie(STARTSEITE_LETZTER_TAG_KEY);
+    if (!roh) {
       try {
         if (typeof localStorage !== 'undefined') {
-          warSchonDa = localStorage.getItem(STARTSEITE_WIEDERKEHR_KEY) === '1';
+          roh = localStorage.getItem(STARTSEITE_LETZTER_TAG_KEY) || '';
         }
       } catch (e) {
-        warSchonDa = false;
+        roh = '';
       }
     }
+    if (roh && /^\d{4}-\d{2}-\d{2}$/.test(roh)) return roh;
 
-    if (warSchonDa) {
-      h1.textContent = 'Willkommen zurück!';
-    }
-
+    if (getCookie(STARTSEITE_WIEDERKEHR_LEGACY) === '1') return null;
     try {
-      setCookie(STARTSEITE_WIEDERKEHR_KEY, '1', 60 * 60 * 24 * 400);
+      if (typeof localStorage !== 'undefined' && localStorage.getItem(STARTSEITE_WIEDERKEHR_LEGACY) === '1') {
+        return null;
+      }
     } catch (e2) {
+      /* ignorieren */
+    }
+    return '';
+  }
+
+  function startseiteLetztenTagSpeichern(tag) {
+    try {
+      setCookie(STARTSEITE_LETZTER_TAG_KEY, tag, 60 * 60 * 24 * 400);
+    } catch (e) {
       /* ignorieren */
     }
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(STARTSEITE_WIEDERKEHR_KEY, '1');
+        localStorage.setItem(STARTSEITE_LETZTER_TAG_KEY, tag);
       }
-    } catch (e3) {
-      /* z. B. privates Fenster */
+    } catch (e2) {
+      /* ignorieren */
     }
+  }
+
+  /**
+   * Startseite: „Willkommen zurück“ nur, wenn der letzte Besuch an einem früheren Kalendertag war (lokal).
+   * Am selben Tag: immer „Herzlich willkommen …“.
+   */
+  function initStartseiteBegruessung() {
+    var h1 = document.getElementById('startseite-begruessung');
+    if (!h1) return;
+
+    var heute = startseiteKalendertagLocal(new Date());
+    var letzter = startseiteLetztenTagLesen();
+
+    if (letzter === null) {
+      letzter = heute;
+    }
+
+    if (letzter && letzter !== heute) {
+      h1.textContent = 'Willkommen zurück!';
+    }
+
+    startseiteLetztenTagSpeichern(heute);
   }
 
   function initCookieBanner() {
@@ -157,7 +195,7 @@
     var p = document.createElement('p');
     p.className = 'cookie-banner__text';
     p.textContent =
-      'Diese Website verwendet Cookies, um Ihren Besuch zu speichern und anonym eine Besucherkennung für interne Statistik zu setzen. Zusätzlich wird in einem Cookie (und bei Bedarf lokal im Browser) gespeichert, ob Sie die Startseite schon einmal besucht haben – dafür kann z. B. „Willkommen zurück“ angezeigt werden. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
+      'Diese Website verwendet Cookies, um Ihren Besuch zu speichern und anonym eine Besucherkennung für interne Statistik zu setzen. Zusätzlich wird der Kalendertag Ihres letzten Startseitenbesuchs gespeichert (Cookie und ggf. lokal im Browser), damit „Willkommen zurück“ erst ab einem neuen Tag erscheinen kann. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
 
     var btn = document.createElement('button');
     btn.type = 'button';
