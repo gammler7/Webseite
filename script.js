@@ -98,6 +98,41 @@
   setBesucherCookie();
 
   var COOKIE_HINWEIS_LS = 'webseite_cookie_hinweis_ok';
+  var STARTSEITE_WIEDERKEHR_KEY = 'webseite_startseite_wiederkehr';
+
+  /** Startseite: „Willkommen zurück“, wenn der Besucher schon einmal da war (Cookie + localStorage). */
+  function initStartseiteBegruessung() {
+    var h1 = document.getElementById('startseite-begruessung');
+    if (!h1) return;
+
+    var warSchonDa = getCookie(STARTSEITE_WIEDERKEHR_KEY) === '1';
+    if (!warSchonDa) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          warSchonDa = localStorage.getItem(STARTSEITE_WIEDERKEHR_KEY) === '1';
+        }
+      } catch (e) {
+        warSchonDa = false;
+      }
+    }
+
+    if (warSchonDa) {
+      h1.textContent = 'Willkommen zurück!';
+    }
+
+    try {
+      setCookie(STARTSEITE_WIEDERKEHR_KEY, '1', 60 * 60 * 24 * 400);
+    } catch (e2) {
+      /* ignorieren */
+    }
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STARTSEITE_WIEDERKEHR_KEY, '1');
+      }
+    } catch (e3) {
+      /* z. B. privates Fenster */
+    }
+  }
 
   function initCookieBanner() {
     if (!document.body) return;
@@ -122,7 +157,7 @@
     var p = document.createElement('p');
     p.className = 'cookie-banner__text';
     p.textContent =
-      'Diese Website verwendet Cookies, um Ihren Besuch zu speichern und anonym eine Besucherkennung für interne Statistik zu setzen. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
+      'Diese Website verwendet Cookies, um Ihren Besuch zu speichern und anonym eine Besucherkennung für interne Statistik zu setzen. Zusätzlich wird in einem Cookie (und bei Bedarf lokal im Browser) gespeichert, ob Sie die Startseite schon einmal besucht haben – dafür kann z. B. „Willkommen zurück“ angezeigt werden. Sie können Cookies in Ihren Browsereinstellungen jederzeit löschen oder einschränken.';
 
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -149,6 +184,7 @@
   }
 
   initCookieBanner();
+  initStartseiteBegruessung();
 
   function sendVisitLog() {
     if (typeof location === 'undefined' || location.protocol === 'file:') return;
