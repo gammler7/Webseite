@@ -39,6 +39,7 @@
 
   var BESUCHER_ID_KEY = 'webseite_besuch_id';
   var LETZTER_BESUCH_KEY = 'webseite_besuch';
+  var ZWEITBESUCH_OVERLAY_COUNT_KEY = 'webseite_besuche_gesamt';
 
   function neueBesucherId() {
     if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -96,6 +97,68 @@
   }
 
   setBesucherCookie();
+
+  function besuchsZaehlerLesen() {
+    var count = 0;
+    var roh = getCookie(ZWEITBESUCH_OVERLAY_COUNT_KEY);
+    if (!roh) {
+      try {
+        if (typeof localStorage !== 'undefined') {
+          roh = localStorage.getItem(ZWEITBESUCH_OVERLAY_COUNT_KEY) || '';
+        }
+      } catch (e) {
+        roh = '';
+      }
+    }
+    if (!roh) return 0;
+    count = parseInt(roh, 10);
+    return isFinite(count) && count > 0 ? count : 0;
+  }
+
+  function besuchsZaehlerSpeichern(count) {
+    try {
+      setCookie(ZWEITBESUCH_OVERLAY_COUNT_KEY, String(count), 60 * 60 * 24 * 400);
+    } catch (e) {
+      /* ignorieren */
+    }
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(ZWEITBESUCH_OVERLAY_COUNT_KEY, String(count));
+      }
+    } catch (e2) {
+      /* ignorieren */
+    }
+  }
+
+  function zeigeZweitbesuchOverlay() {
+    if (!document.body) return;
+    var overlay = document.createElement('div');
+    overlay.className = 'second-visit-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+
+    var bild = document.createElement('img');
+    bild.src = 'ichVorSpielautomat(Sprechblase).png';
+    bild.alt = '';
+    overlay.appendChild(bild);
+
+    document.body.classList.add('second-visit-overlay-active');
+    document.body.appendChild(overlay);
+
+    window.setTimeout(function () {
+      overlay.remove();
+      document.body.classList.remove('second-visit-overlay-active');
+    }, 10000);
+  }
+
+  function initZweitbesuchOverlay() {
+    var count = besuchsZaehlerLesen() + 1;
+    besuchsZaehlerSpeichern(count);
+    if (count === 2) {
+      zeigeZweitbesuchOverlay();
+    }
+  }
+
+  initZweitbesuchOverlay();
 
   var COOKIE_HINWEIS_LS = 'webseite_cookie_hinweis_ok';
   var STARTSEITE_LETZTER_TAG_KEY = 'webseite_startseite_letzter_tag';

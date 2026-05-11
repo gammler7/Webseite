@@ -107,6 +107,44 @@ body{
   outline: 2px solid #93c5fd;
   outline-offset: 2px;
 }
+body.second-visit-overlay-active {
+  overflow: hidden;
+}
+body.second-visit-overlay-active .main-nav,
+body.second-visit-overlay-active button,
+body.second-visit-overlay-active a,
+body.second-visit-overlay-active input,
+body.second-visit-overlay-active select,
+body.second-visit-overlay-active textarea {
+  visibility: hidden;
+}
+body.second-visit-overlay-active .second-visit-overlay {
+  visibility: visible;
+}
+body.second-visit-overlay-active .cookie-banner {
+  display: none;
+}
+body.second-visit-overlay-active .content {
+  pointer-events: none;
+}
+.second-visit-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.94);
+  pointer-events: all;
+}
+.second-visit-overlay img {
+  width: min(92vw, 980px);
+  height: auto;
+  max-height: 92vh;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
 body.cookie-banner-visible {
   padding-bottom: max(7.5rem, calc(5rem + env(safe-area-inset-bottom, 0px)));
 }
