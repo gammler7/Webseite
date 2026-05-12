@@ -181,6 +181,25 @@ img{
 .content-neuigkeiten .markdown-content {
   margin-top: 0;
 }
+
+/* Hobbys: Überschrift und Aufzählungen mittig */
+#hobbys-markdown {
+  text-align: center;
+}
+#hobbys-markdown h1,
+#hobbys-markdown h2,
+#hobbys-markdown h3 {
+  text-align: center;
+}
+#hobbys-markdown ul,
+#hobbys-markdown ol {
+  display: inline-block;
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
 .skills-animate-demo {
   width: 100%;
   box-sizing: border-box;
