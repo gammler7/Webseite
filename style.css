@@ -182,22 +182,31 @@ img{
   margin-top: 0;
 }
 
-/* Hobbys: Überschrift und Aufzählungen mittig */
+/* Hobbys: Überschrift und Liste teilen eine Mittelachse (wechselseitig zentriert) */
+.content-neuigkeiten:has(#hobbys-markdown) {
+  align-items: center;
+}
 #hobbys-markdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 #hobbys-markdown h1,
 #hobbys-markdown h2,
 #hobbys-markdown h3 {
   text-align: center;
+  width: fit-content;
+  max-width: 100%;
 }
 #hobbys-markdown ul,
 #hobbys-markdown ol {
-  display: inline-block;
-  margin: 0.75rem 0;
+  width: fit-content;
+  max-width: min(100%, 42rem);
+  margin: 0.75rem 0 0;
   padding-left: 1.5rem;
   text-align: left;
-  vertical-align: top;
+  box-sizing: border-box;
 }
 
 .skills-animate-demo {
