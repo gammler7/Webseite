@@ -14,11 +14,49 @@
       <li><a href="hobbys.html" class="active">Hobbys</a></li>
     </ul>
   </nav>
-  <div class="content">
-    <h1>Hobbys</h1>
-    <p>Ich fahre gerne kurze Strecken mit dem Fahrrad.</p>
-    <p>Ich habe ein günstiges E-Bike von Prophete.</p>
+  <div class="content content-neuigkeiten">
+    <div id="hobbys-markdown" class="markdown-content" aria-live="polite">
+      <p>Lade Hobbys …</p>
+    </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    (function() {
+      function initScrollReveal(root) {
+        if (!root || typeof IntersectionObserver === 'undefined') return;
+        var targets = root.querySelectorAll('h1, h2, h3, p, ul, ol, li, blockquote');
+        for (var i = 0; i < targets.length; i++) {
+          targets[i].classList.add('reveal-item');
+        }
+        var observer = new IntersectionObserver(function(entries, obs) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.18 });
+        for (var j = 0; j < targets.length; j++) {
+          observer.observe(targets[j]);
+        }
+      }
+
+      var el = document.getElementById('hobbys-markdown');
+      fetch('hobbys.md')
+        .then(function(r) { return r.text(); })
+        .then(function(md) {
+          if (typeof marked !== 'undefined') {
+            el.innerHTML = marked.parse(md);
+          } else {
+            el.innerHTML = '<pre>' + md.replace(/</g, '&lt;') + '</pre>';
+          }
+          initScrollReveal(el);
+        })
+        .catch(function() {
+          el.innerHTML = '<p>Die Datei <code>hobbys.md</code> konnte nicht geladen werden.</p>';
+        });
+    })();
+  </script>
   <script src="script.js?v=202605092"></script>
 </body>
 </html>
