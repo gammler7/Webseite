@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /logs.php
+Disallow: /log_visit.php
+Disallow: /private/
+Disallow: /audio-test.html
+
+Sitemap: https://www.gammel26.de/sitemap.xml

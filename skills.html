@@ -3,8 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Über mich</title>
+  <title>Über mich – Webentwicklung &amp; Profil – gammel26.de</title>
+  <meta name="description" content="Profil und technische Schwerpunkte: HTML, CSS, JavaScript, Node.js, PHP, MongoDB und MariaDB – praxisnahe Webprojekte seit 2020." />
+  <link rel="canonical" href="https://www.gammel26.de/skills.html" />
+  <meta property="og:title" content="Über mich – Webentwicklung &amp; Profil – gammel26.de" />
+  <meta property="og:description" content="Mein Weg in die Entwicklung, technische Schwerpunkte und aktueller Fokus – praxisnahe Webprojekte mit klarer Struktur." />
+  <meta property="og:url" content="https://www.gammel26.de/skills.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="gammel26.de" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "name": "Über mich – gammel26.de",
+    "url": "https://www.gammel26.de/skills.html",
+    "inLanguage": "de",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "gammel26",
+      "url": "https://www.gammel26.de/",
+      "knowsAbout": ["HTML", "CSS", "JavaScript", "Node.js", "PHP", "MongoDB", "MariaDB"]
+    }
+  }
+  </script>
 </head>
 <body>
   <nav class="main-nav" aria-label="Hauptnavigation">
@@ -25,7 +48,38 @@
       </div>
     </section>
     <div id="neuigkeiten-markdown" class="markdown-content" aria-live="polite">
-      <p>Lade Neuigkeiten …</p>
+      <h1>Über mich und Profil</h1>
+      <p>Ich entwickle praxisnahe Webprojekte mit Fokus auf klare Struktur, solide Technik und gute Wartbarkeit.</p>
+      <h2>Mein Weg in die Entwicklung</h2>
+      <ul>
+        <li>Seit 2020 baue ich kontinuierlich eigene Projekte auf.</li>
+        <li>Begonnen habe ich mit kleinen Lernprojekten und Schritt fuer Schritt komplexere Anwendungen umgesetzt.</li>
+        <li>Besonders wichtig war fuer mich, Konzepte nicht nur zu kopieren, sondern wirklich zu verstehen und selbst anzupassen.</li>
+      </ul>
+      <h2>Technische Schwerpunkte</h2>
+      <ul>
+        <li><strong>Frontend:</strong> HTML, CSS, JavaScript</li>
+        <li><strong>Backend-Grundlagen:</strong> Node.js und PHP</li>
+        <li><strong>Datenbanken:</strong> MongoDB und MariaDB (Anbindung, Abfragen, einfache Datenmodelle)</li>
+        <li><strong>Praxis:</strong> Formularverarbeitung, Validierung, kleine APIs, Dateistrukturen und Deployment</li>
+      </ul>
+      <h2>Was ich in Projekten beachte</h2>
+      <ul>
+        <li><strong>Verstaendlicher Code:</strong> klare Benennung und nachvollziehbarer Aufbau</li>
+        <li><strong>Zuverlaessigkeit:</strong> robuste Basisfunktionen statt instabiler Schnellloesungen</li>
+        <li><strong>Datenschutz-Bewusstsein:</strong> sparsame Datennutzung und transparente Hinweise</li>
+        <li><strong>Weiterentwicklung:</strong> regelmaessige Verbesserungen statt einmaliger Endversion</li>
+      </ul>
+      <h2>Aktueller Fokus</h2>
+      <p>Zurzeit erweitere ich meine Seite in Richtung:</p>
+      <ul>
+        <li>bessere Struktur von Inhalten</li>
+        <li>stabilere Server- und Logik-Funktionen</li>
+        <li>rechtlich sauberere Darstellung (z. B. Cookie-Hinweise und reduzierte externe Abhaengigkeiten)</li>
+      </ul>
+      <h2>Kurzprofil</h2>
+      <p>Ich arbeite gerne an Projekten, die fuer Besucher klar, schnell und nuetzlich sind.<br>
+      Mein Ziel ist es, Technik und Inhalt so zu verbinden, dass die Seite professionell wirkt und trotzdem persoenlich bleibt.</p>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -34,7 +88,7 @@
       function setzeArbeitslosDauer() {
         var span = document.getElementById('arbeitslos-dauer');
         if (!span) return;
-        var start = new Date(2025, 6, 2);  // 2. Juli 2025
+        var start = new Date(2025, 6, 2);
         var heute = new Date();
         start.setHours(0, 0, 0, 0);
         heute.setHours(0, 0, 0, 0);
@@ -54,7 +108,9 @@
         if (!root || typeof IntersectionObserver === 'undefined') return;
         var targets = root.querySelectorAll('h1, h2, h3, p, ul, ol, li, blockquote');
         for (var i = 0; i < targets.length; i++) {
-          targets[i].classList.add('reveal-item');
+          if (!targets[i].classList.contains('reveal-item')) {
+            targets[i].classList.add('reveal-item');
+          }
         }
         var observer = new IntersectionObserver(function(entries, obs) {
           entries.forEach(function(entry) {
@@ -65,7 +121,9 @@
           });
         }, { threshold: 0.18 });
         for (var j = 0; j < targets.length; j++) {
-          observer.observe(targets[j]);
+          if (!targets[j].classList.contains('is-visible')) {
+            observer.observe(targets[j]);
+          }
         }
       }
 
@@ -106,7 +164,18 @@
 
         updateFromDays(aktuelleArbeitstage);
       }
+
       var el = document.getElementById('neuigkeiten-markdown');
+
+      function initSeite() {
+        setzeArbeitslosDauer();
+        initScrollReveal(el);
+        initTabsAndProgress();
+        initParallax();
+      }
+
+      initSeite();
+
       fetch('neuigkeiten.md')
         .then(function(r) { return r.text(); })
         .then(function(md) {
@@ -115,16 +184,9 @@
           } else {
             el.innerHTML = '<pre>' + md.replace(/</g, '&lt;') + '</pre>';
           }
-          setzeArbeitslosDauer();
-          initScrollReveal(el);
-          initTabsAndProgress();
-          initParallax();
+          initSeite();
         })
-        .catch(function() {
-          el.innerHTML = '<p>Die Datei <code>neuigkeiten.md</code> konnte nicht geladen werden.</p>';
-          initTabsAndProgress();
-          initParallax();
-        });
+        .catch(function() { /* statischer HTML-Inhalt bleibt sichtbar */ });
     })();
   </script>
   <script src="script.js?v=202605092"></script>
