@@ -32,5 +32,5 @@ Zurzeit erweitere ich meine Seite in Richtung:
 
 ## Kurzprofil
 
-Ich arbeite gerne an Projekten, die fuer Besucher klar, schnell und nuetzlich sind.
-Mein Ziel ist es, Technik und Inhalt so zu verbinden, dass die Seite professionell wirkt und trotzdem persoenlich bleibt.
+Ich arbeite gerne an Projekten, die für Besucher klar, schnell und nützlich sind.
+Mein Ziel ist es, Technik und Inhalt so zu verbinden, dass die Seite professionell wirkt und trotzdem persönlich bleibt.
