@@ -38,14 +38,6 @@
     </ul>
   </nav>
   <div class="content content-neuigkeiten">
-    <section class="skills-animate-demo" aria-label="Animation Testbereich">
-      <p class="skills-animate-demo__subtitle">Aktuell: <strong>ca. <span id="skills-days-value">8 - 9</span> Tage pro Monat</strong></p>
-      <div class="skills-progress">
-        <div class="skills-progress__track" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="8" aria-label="Arbeitstage im Monat">
-          <div id="skills-progress-fill" class="skills-progress__fill"></div>
-        </div>
-      </div>
-    </section>
     <div id="neuigkeiten-markdown" class="markdown-content" aria-live="polite">
       <h1>Über mich und Profil</h1>
       <p>Ich entwickle praxisnahe Webprojekte mit Fokus auf klare Struktur, solide Technik und gute Wartbarkeit.</p>
@@ -142,35 +134,11 @@
         updateParallax();
       }
 
-      function initTabsAndProgress() {
-        var tageWert = document.getElementById('skills-days-value');
-        var percentLabel = document.getElementById('skills-progress-percent');
-        var fill = document.getElementById('skills-progress-fill');
-        var track = document.querySelector('.skills-progress__track');
-        var arbeitstageImMonat = 30;
-        var aktuelleArbeitstage = 8;
-        var aktuelleArbeitstageText = '8 - 9';
-
-        function updateFromDays(tage) {
-          var sichereTage = Number(tage);
-          if (!isFinite(sichereTage) || sichereTage < 0) sichereTage = 0;
-          if (sichereTage > arbeitstageImMonat) sichereTage = arbeitstageImMonat;
-          var percent = (sichereTage / arbeitstageImMonat) * 100;
-          if (tageWert) tageWert.textContent = aktuelleArbeitstageText;
-          if (percentLabel) percentLabel.textContent = sichereTage + '/' + arbeitstageImMonat + ' Tage';
-          if (fill) fill.style.width = percent + '%';
-          if (track) track.setAttribute('aria-valuenow', String(sichereTage));
-        }
-
-        updateFromDays(aktuelleArbeitstage);
-      }
-
       var el = document.getElementById('neuigkeiten-markdown');
 
       function initSeite() {
         setzeArbeitslosDauer();
         initScrollReveal(el);
-        initTabsAndProgress();
         initParallax();
       }
 

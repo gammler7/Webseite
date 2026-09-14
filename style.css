@@ -209,63 +209,6 @@ img{
   box-sizing: border-box;
 }
 
-.skills-animate-demo {
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0 0 1.25rem 0;
-  padding: 1rem;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(3px);
-}
-.skills-animate-demo__title {
-  margin: 0 0 0.35rem 0;
-  text-align: left;
-  font-size: 1.1rem;
-  color: #fff;
-}
-.skills-animate-demo__subtitle {
-  margin: 0 0 0.8rem 0;
-  color: #fff;
-}
-.skills-progress {
-  margin-bottom: 1rem;
-}
-.skills-current-work-text {
-  color: #fff;
-}
-.skills-progress__label {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.35rem;
-  font-size: 0.95rem;
-  color: #fff;
-}
-.skills-progress__track {
-  width: 100%;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  overflow: hidden;
-}
-.skills-progress__fill {
-  width: 0%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(110deg, #3b82f6 0%, #22c55e 35%, #86efac 50%, #22c55e 65%, #3b82f6 100%);
-  background-size: 220% 100%;
-  transition: width 550ms ease;
-  animation: skillsProgressShimmer 4.2s linear infinite;
-}
-@keyframes skillsProgressShimmer {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 220% 50%;
-  }
-}
 .skills-tabs {
   display: flex;
   gap: 0.5rem;
