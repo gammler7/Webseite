@@ -290,6 +290,16 @@ img{
   text-align: center;
 }
 
+/* Hinweis Arbeit / Beruf */
+.skills-arbeit {
+  margin: 0 0 1.25rem 0;
+  color: #fff;
+  line-height: 1.5;
+}
+.skills-arbeit strong {
+  font-size: 1.15rem;
+}
+
 /* Hervorgehobener Hinweis (z. B. Wiederbeginn) */
 .announce-back-on {
   width: 100%;
