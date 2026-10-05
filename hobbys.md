@@ -1,6 +1,9 @@
 # Hobbys
 
 - Ich habe Elektronik entdeckt.
+
+Ich kann jetzt mit einem Oszilloskop, Multimeter, Wärmebildkamera gut umgehen. Dies habe ich alles von ChatGPT gelernt.
+
 - Ich fahre gerne kurze Strecken mit dem Fahrrad.
 
 Ich habe ein günstiges E-Bike von Prophete.
