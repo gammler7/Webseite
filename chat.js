@@ -63,14 +63,16 @@
       var thinking = appendBubble('assistant', '…');
       thinking.classList.add('is-thinking');
 
-      fetch('chat.php', {
+      fetch('https://gammel26.de/chat.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: text, history: history }),
       })
         .then(function (r) {
-          return r.json().then(function (data) {
-            return { okHttp: r.ok, data: data };
+          return r.text().then(function (raw) {
+            var data = null;
+            try { data = JSON.parse(raw); } catch (e) { data = null; }
+            return { okHttp: r.ok, status: r.status, data: data, raw: raw };
           });
         })
         .then(function (result) {
@@ -81,6 +83,7 @@
             if (err === 'rate') msg = 'Bitte kurz warten und erneut senden.';
             else if (err === 'model') msg = 'Kein Ollama-Modell gefunden.';
             else if (err === 'ollama') msg = 'Ollama auf dem Server ist nicht erreichbar.';
+            else if (!result.data) msg = 'Keine gültige Antwort vom Server (HTTP ' + result.status + ').';
             thinking.textContent = msg;
             return;
           }
