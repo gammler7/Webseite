@@ -185,14 +185,60 @@ if ($model === '') {
     exit;
 }
 
-$siteContext = <<<'CTX'
-Website: gammel26.de (persönliche Seite).
+function site_last_modified_label($url) {
+    $headers = @get_headers($url, 1);
+    if (!is_array($headers)) {
+        return null;
+    }
+    $raw = null;
+    if (isset($headers['Last-Modified'])) {
+        $raw = is_array($headers['Last-Modified'])
+            ? end($headers['Last-Modified'])
+            : $headers['Last-Modified'];
+    }
+    if (!$raw) {
+        return null;
+    }
+    $ts = strtotime((string) $raw);
+    if ($ts === false) {
+        return null;
+    }
+    if (class_exists('IntlDateFormatter')) {
+        $formatter = new IntlDateFormatter(
+            'de_DE',
+            IntlDateFormatter::LONG,
+            IntlDateFormatter::NONE,
+            'Europe/Berlin'
+        );
+        if ($formatter) {
+            $labeled = $formatter->format($ts);
+            if ($labeled) {
+                return $labeled;
+            }
+        }
+    }
+    $months = [
+        1 => 'Januar', 2 => 'Februar', 3 => 'März', 4 => 'April',
+        5 => 'Mai', 6 => 'Juni', 7 => 'Juli', 8 => 'August',
+        9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Dezember',
+    ];
+    $day = (int) date('j', $ts);
+    $month = $months[(int) date('n', $ts)];
+    $year = date('Y', $ts);
+    return $day . '. ' . $month . ' ' . $year;
+}
 
-Seiten:
-- Startseite: Willkommen; Foto vor einem Spielautomaten.
-- Über mich (skills.html): Webentwicklung seit 2020; HTML, CSS, JavaScript, Node.js, PHP, MongoDB, MariaDB; Fokus auf klare Struktur, Wartbarkeit, Datenschutz. Arbeit: vom 4.4. bis 15.9.26 als Taxifahrer (Midijob).
-- Hobbys: Elektronik (Oszilloskop, Multimeter, Wärmebildkamera; gelernt mit ChatGPT); kurze Fahrradtouren; E-Bike von Prophete; Taekwondo bei Großmeister Körber.
-CTX;
+$startseiteGeaendert = site_last_modified_label('https://www.gammel26.de/');
+if ($startseiteGeaendert === null) {
+    $startseiteGeaendert = '8. Oktober 2026';
+}
+
+$siteContext = "Website: gammel26.de (persönliche Seite).\n\n"
+    . "Seiten:\n"
+    . "- Startseite: Willkommen; Foto vor einem Spielautomaten. Zuletzt geändert: "
+    . $startseiteGeaendert . ".\n"
+    . "- Über mich (skills.html): Webentwicklung seit 2020; HTML, CSS, JavaScript, Node.js, PHP, MongoDB, MariaDB; Fokus auf klare Struktur, Wartbarkeit, Datenschutz. Arbeit: vom 4.4. bis 15.9.26 als Taxifahrer (Midijob).\n"
+    . "- Hobbys: Elektronik (Oszilloskop, Multimeter, Wärmebildkamera; gelernt mit ChatGPT); kurze Fahrradtouren; E-Bike von Prophete; Taekwondo bei Großmeister Körber.\n";
 
 $refuseReply = 'Dazu kann ich nichts sagen. Ich beantworte nur Fragen zu dieser Website: Startseite, Über mich und Hobbys.';
 
@@ -204,6 +250,7 @@ $siteKeywords = [
     'html', 'css', 'javascript', 'node', 'php', 'mongodb', 'mariadb',
     'entwicklung', 'webentwicklung', 'projekt', 'schwerpunkt', 'fokus',
     'wer bist', 'was kannst', 'hilfe', 'hallo', 'hi', 'hey', 'guten',
+    'wann', 'geändert', 'geaendert', 'aktualisiert', 'zuletzt', 'datum', 'änder',
 ];
 
 $messageLower = mb_strtolower($message, 'UTF-8');
@@ -228,7 +275,8 @@ $systemPrompt = "Du bist der Website-Assistent von gammel26.de.\n"
     . "Regel 1: Nutze NUR die Seiteninhalte unten. Kein Allgemeinwissen.\n"
     . "Regel 2: Passt die Frage nicht zu den Seiteninhalten, antworte genau: "
     . $refuseReply . "\n"
-    . "Regel 3: Kurz, klar, auf Deutsch. Nichts erfinden.\n\n"
+    . "Regel 3: Kurz, klar, auf Deutsch. Nichts erfinden.\n"
+    . "Regel 4: Daten und Fakten (z. B. Änderungsdatum) NUR aus den Seiteninhalten übernehmen. Niemals ein anderes Datum erfinden.\n\n"
     . "Seiteninhalte:\n"
     . $siteContext;
 
