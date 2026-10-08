@@ -49,6 +49,29 @@
   </div>
   <p class="last-updated" id="last-updated">Zuletzt geändert: –</p>
   </div>
+
+  <button type="button" id="site-chat-toggle" class="site-chat-toggle" aria-controls="site-chat" aria-expanded="false">
+    Chat
+  </button>
+  <aside id="site-chat" class="site-chat" aria-hidden="true" aria-label="KI-Chat">
+    <header class="site-chat__header">
+      <strong>KI-Chat</strong>
+      <button type="button" id="site-chat-close" class="site-chat__close" aria-label="Chat schließen">×</button>
+    </header>
+    <div id="site-chat-log" class="site-chat__log" role="log" aria-live="polite">
+      <div class="site-chat__msg site-chat__msg--assistant">
+        <div class="site-chat__bubble">Hallo! Frag mich gerne etwas.</div>
+      </div>
+    </div>
+    <form id="site-chat-form" class="site-chat__form">
+      <label class="visually-hidden" for="site-chat-input">Nachricht</label>
+      <input id="site-chat-input" class="site-chat__input" type="text" maxlength="800" autocomplete="off" placeholder="Nachricht…" />
+      <button id="site-chat-send" class="site-chat__send" type="submit">Senden</button>
+    </form>
+  </aside>
+
   <script src="script.js?v=202605092"></script>
+  <script src="chat.js?v=20261008"></script>
 </body>
 </html>
+
