@@ -185,16 +185,66 @@ if ($model === '') {
     exit;
 }
 
+$siteContext = <<<'CTX'
+Website: gammel26.de (persönliche Seite).
+
+Seiten:
+- Startseite: Willkommen; Foto vor einem Spielautomaten.
+- Über mich (skills.html): Webentwicklung seit 2020; HTML, CSS, JavaScript, Node.js, PHP, MongoDB, MariaDB; Fokus auf klare Struktur, Wartbarkeit, Datenschutz. Arbeit: vom 4.4. bis 15.9.26 als Taxifahrer (Midijob).
+- Hobbys: Elektronik (Oszilloskop, Multimeter, Wärmebildkamera; gelernt mit ChatGPT); kurze Fahrradtouren; E-Bike von Prophete; Taekwondo bei Großmeister Körber.
+CTX;
+
+$refuseReply = 'Dazu kann ich nichts sagen. Ich beantworte nur Fragen zu dieser Website: Startseite, Über mich und Hobbys.';
+
+$siteKeywords = [
+    'gammel', 'website', 'webseite', 'seite', 'startseite', 'willkommen',
+    'über mich', 'uber mich', 'profil', 'arbeit', 'taxi', 'midijob',
+    'hobby', 'hobbys', 'elektronik', 'oszilloskop', 'multimeter', 'wärmebild',
+    'waermebild', 'fahrrad', 'ebike', 'e-bike', 'prophete', 'taekwondo', 'körber', 'koerber',
+    'html', 'css', 'javascript', 'node', 'php', 'mongodb', 'mariadb',
+    'entwicklung', 'webentwicklung', 'projekt', 'schwerpunkt', 'fokus',
+    'wer bist', 'was kannst', 'hilfe', 'hallo', 'hi', 'hey', 'guten',
+];
+
+$messageLower = mb_strtolower($message, 'UTF-8');
+$onTopic = false;
+foreach ($siteKeywords as $kw) {
+    if ($kw !== '' && mb_strpos($messageLower, $kw) !== false) {
+        $onTopic = true;
+        break;
+    }
+}
+
+if (!$onTopic) {
+    echo json_encode([
+        'ok' => true,
+        'reply' => $refuseReply,
+        'model' => $OLLAMA_MODEL !== '' ? $OLLAMA_MODEL : 'filter',
+    ]);
+    exit;
+}
+
+$systemPrompt = "Du bist der Website-Assistent von gammel26.de.\n"
+    . "Regel 1: Nutze NUR die Seiteninhalte unten. Kein Allgemeinwissen.\n"
+    . "Regel 2: Passt die Frage nicht zu den Seiteninhalten, antworte genau: "
+    . $refuseReply . "\n"
+    . "Regel 3: Kurz, klar, auf Deutsch. Nichts erfinden.\n\n"
+    . "Seiteninhalte:\n"
+    . $siteContext;
+
 $messages = array_merge(
     [
         [
             'role' => 'system',
-            'content' => 'Du bist ein freundlicher Assistent auf der persönlichen Website gammel26.de. Antworte kurz, klar und auf Deutsch.',
+            'content' => $systemPrompt,
         ],
     ],
     $history,
     [
-        ['role' => 'user', 'content' => $message],
+        [
+            'role' => 'user',
+            'content' => "Frage zur Website gammel26.de:\n" . $message,
+        ],
     ]
 );
 
